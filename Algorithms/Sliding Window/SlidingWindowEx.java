@@ -38,32 +38,6 @@ public class SlidingWindow {
 	}
 	
 	/**
-	 * Longest Repeating Substring Replacement from leetcode
-	 * 
-	 * Write a function to find the length of the longest substring containing the same letter in a given string s, 
-	 * after performing at most k operations in which you can choose any character of the string and change it to any other uppercase English letter.
-	 * 
-	 * Time: O(n)
-	 * Space: O(k), where k is the size of the character set.
-	 */
-	public static int longestRepeat(String s, int k) {
-		
-		Map<Character, Integer> state = new HashMap<>();
-		
-		for(int end = 0; end < s.length(); end++) {
-			
-			char currentChar = s.charAt(end);
-			
-			if(state.containsKey(currentChar)) {
-				
-			}
-			
-		}
-		
-		return 0;
-	}
-	
-	/**
 	 * Longest Substring Without Repeating Characters from leetcode
 	 *
 	 * Write a function to return the length of the longest substring in a provided string s where all characters in the substring are distinct.
