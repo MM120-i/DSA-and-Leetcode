@@ -2,6 +2,7 @@ package test;
 
 import java.util.*;
 
+// Variable length SlidingWindow.
 public class SlidingWindow {
 	
 	/**
