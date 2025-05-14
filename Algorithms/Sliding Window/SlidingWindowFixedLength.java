@@ -14,6 +14,43 @@ import java.util.*;
   */
 
 public class SlidingWindow2 {
+	
+	/**
+	 * Max Points You Can Obtain From Cards from leetcode.
+	 * 
+	 * Given an array of integers representing the value of cards, write a function to calculate the maximum score you 
+	 * can achieve by selecting exactly k cards from either the beginning or the end of the array.
+	 */
+	public int maxScore(int[] cards, int k) {
+		
+		int total = 0;
+		int n = cards.length;
+		
+		for(int card : cards) {
+			total += card;
+		}
+				
+		if(k >= n) {
+			return total;
+		}
+		
+		int windowSize = n - k;
+		int state = 0, maxPoints = 0;
+		int start = 0;
+		
+		for(int end = 0; end < n; end++) {
+			
+			state += cards[end];	// Expanding the window
+			
+			if(end - start + 1 == windowSize) {
+				maxPoints = Math.max(maxPoints, total - state);
+				state -= cards[start];
+				start++;	
+			}
+		}
+		
+		return maxPoints;
+	}
 
 	//  Given an array of integers nums and an integer k, find the maximum sum of any contiguous subarray of size k. 
 	public static int maxSubarr(int[] nums, int k) {
@@ -65,8 +102,14 @@ public class SlidingWindow2 {
 
 	public static void main(String[] args) {
 		
+		// Max Subarray.
 		int[] nums = {2, 1, 5, 1, 3, 2};
 		int k = 3;
 		System.out.println("Max sum of subarray of size k: " + maxSubarr(nums, k));
+		
+		// Max Points You Can Obtain From Cards
+		SlidingWindow2 c = new SlidingWindow2();
+		int[] cards = {2, 11, 4, 5, 3, 9, 2};
+		System.out.println(c.maxScore(cards, k));
 	}
 }
