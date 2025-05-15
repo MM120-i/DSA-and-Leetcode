@@ -16,12 +16,51 @@ import java.util.*;
 public class SlidingWindow2 {
 	
 	/**
+	 * Max Sum of Distinct Subarrays Length k from leetcode
+	 * 
+	 * Given an integer array nums and an integer k, write a function to identify the highest possible sum of a 
+	 * subarray within nums, where the subarray meets the following criteria: 
+	 * its length is k, and all of its elements are unique.
+	 */
+	public int maxSum(int[] nums, final int k) {
+		
+		int maxSum = 0, currSum = 0, start = 0;
+		Map<Integer, Integer> state = new HashMap<>();
+		
+		for(int end = 0; end < nums.length; end++) {
+			
+			currSum += nums[end];
+			state.put(nums[end], state.getOrDefault(nums[end], 0) + 1);
+			
+			if(end - start + 1 == k) {
+				
+				// Checks if all elements r unique
+				if(state.size() == k) {
+					maxSum = Math.max(maxSum, currSum);
+				}
+				
+				// Shrink the window
+				currSum -= nums[start];
+				state.put(nums[start], state.get(nums[start]) - 1);
+				
+				if(state.get(nums[start]) == 0) {
+					state.remove(nums[start]);
+				}
+				
+				start++;
+			}
+		}
+		
+		return maxSum;
+	}
+	
+	/**
 	 * Max Points You Can Obtain From Cards from leetcode.
 	 * 
 	 * Given an array of integers representing the value of cards, write a function to calculate the maximum score you 
 	 * can achieve by selecting exactly k cards from either the beginning or the end of the array.
 	 */
-	public int maxScore(int[] cards, int k) {
+	public int maxScore(int[] cards, final int k) {
 		
 		int total = 0;
 		int n = cards.length;
@@ -53,7 +92,7 @@ public class SlidingWindow2 {
 	}
 
 	//  Given an array of integers nums and an integer k, find the maximum sum of any contiguous subarray of size k. 
-	public static int maxSubarr(int[] nums, int k) {
+	public static int maxSubarr(int[] nums, final int k) {
 		
 		int maxSum = 0;
 		int windowSum = 0;
@@ -74,10 +113,10 @@ public class SlidingWindow2 {
 	}
 	
 	// Fixed Length sliding window template.
-	public int fixedLength(int[] nums, int k) {
+	public int fixedLength(int[] nums, final int k) {
 		
 		int state = 0;	// or use an appropriate data structure
-		// Deque<Integer> state = new ArrayDeque<>();
+		// Deque<Integer> state = new ArrayDeque<>();c
 		// Set<Character> state = new HashSet<>();
 		// Map<Character, Integer> state = new HashMap<>();
 		int maxResult = 0;
@@ -104,12 +143,18 @@ public class SlidingWindow2 {
 		
 		// Max Subarray.
 		int[] nums = {2, 1, 5, 1, 3, 2};
-		int k = 3;
+		final int k = 4;
 		System.out.println("Max sum of subarray of size k: " + maxSubarr(nums, k));
 		
 		// Max Points You Can Obtain From Cards
 		SlidingWindow2 c = new SlidingWindow2();
 		int[] cards = {2, 11, 4, 5, 3, 9, 2};
 		System.out.println(c.maxScore(cards, k));
+		
+		// maxSum
+		SlidingWindow2 sol = new SlidingWindow2();
+		int[] nums = {3, 2, 2, 3, 4, 6, 7, 7, -1};
+		final int k = 4;		
+		System.out.println(sol.maxSum(nums, k));
 	}
 }
