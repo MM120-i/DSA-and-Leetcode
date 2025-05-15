@@ -2,7 +2,7 @@ package test;
 
 import java.util.*;
 
-// Variable length SlidingWindow.
+//Variable length SlidingWindow.
 public class SlidingWindow {
 	
 	/**
@@ -101,6 +101,34 @@ public class SlidingWindow {
 		}
 		
 		return maxFruit;
+	}
+	
+	// Template
+	public int variableLength(int[] nums) {
+		
+		Map<Integer, Integer> state = new HashMap<>();	// Or pick another data structure like hashset
+		int start = 0, maxLength = 0;
+		
+		for(int end = 0; end < nums.length; end++) {
+			
+			// Extend the window
+			state.put(nums[end], state.getOrDefault(nums[end], 0) + 1);
+			
+			// While the state is invalid, contract the window from the left
+			// isInvalid depends on the problem
+			while(!isInvalid(state)) {
+				
+				state.put(nums[start], state.get(nums[start]) - 1);
+				
+				if(state.get(nums[start]) == 0) {
+					state.remove(nums[start]);
+				}
+				
+				start++;
+			}
+		}
+
+		return 0;
 	}
 
 	public static void main(String[] args) {
