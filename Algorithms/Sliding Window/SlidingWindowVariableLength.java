@@ -128,7 +128,12 @@ public class SlidingWindow {
 			}
 		}
 
-		return 0;
+		return maxLength;
+	}
+	
+	// Depends on the problem
+	private boolean isInvalid(Map<Integer, Integer> state) {
+		return true;
 	}
 
 	public static void main(String[] args) {
