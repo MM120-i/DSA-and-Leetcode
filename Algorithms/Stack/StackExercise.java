@@ -90,6 +90,49 @@ public class StackExercise {
 		return currString.toString();
 	}
 	
+	/**
+	 * Longest Valid Parentheses from leetcode.
+	 * 
+	 * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring. 
+	 * A well-formed parentheses string is one that follows these rules:
+	 * 
+     * Open brackets must be closed by a matching pair in the correct order.
+     * 
+	 * For example, given the string "(()", the longest valid parentheses substring is "()", which has a length of 2. 
+	 * Another example is the string ")()())", where the longest valid parentheses substring is "()()", which has a length of 4.
+	 */
+	public static int longestValidParentheses(String s) {
+		
+		if(s.trim() == "" || s.length() <= 1) {
+			return 0;
+		}
+		
+		Stack<Integer> stack = new Stack<>();
+		stack.push(-1);
+		int length = 0;
+		
+		for(int i = 0; i < s.length(); i++) {
+			
+			char ch = s.charAt(i);
+			
+			if(ch == '(') {
+				stack.push(i);
+			}
+			else {
+				stack.pop();
+				
+				if(stack.isEmpty()) {
+					stack.push(i);
+				}
+				else {
+					length = Math.max(length, i - stack.peek());
+				}
+			}
+		}
+		
+		return length;
+	}
+	
 
 	public static void main(String[] args) {
 		
@@ -100,5 +143,9 @@ public class StackExercise {
 		
 		// decodeString
 		System.out.println(decodeString("3[a2[c]]"));
+		
+		// longestValidParenthesis
+		System.out.println(longestValidParentheses("())))"));
 	}
+
 }
