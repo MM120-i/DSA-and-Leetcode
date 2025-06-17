@@ -28,22 +28,24 @@ public class MonoStackExercise {
 				stack.push(i++);
 			}
 			else {
-				int top = stack.pop();
-				int left = stack.isEmpty() ? - 1 : stack.peek();
-				int width = i - left - 1;
-				int area = heights[top] * width;
-				maxArea = Math.max(maxArea, area);
+				maxArea = helper(maxArea, stack, i, heights);
 			}			
-			
 		}
 		
 		while(!stack.isEmpty()) {
-			int top = stack.pop();
-			int left = stack.isEmpty() ? - 1 : stack.peek();
-			int width = i - left - 1;
-			int area = heights[top] * width;
-			maxArea = Math.max(maxArea, area);
+			maxArea = helper(maxArea, stack, i, heights);
 		}
+		
+		return maxArea;
+	}
+	
+	private static int helper(int maxArea, Stack<Integer> stack, int i, int[] heights) {
+		
+		int top = stack.pop();
+		int left = stack.isEmpty() ? - 1 : stack.peek();
+		int width = i - left - 1;
+		int area = heights[top] * width;
+		maxArea = Math.max(maxArea, area);
 		
 		return maxArea;
 	}
