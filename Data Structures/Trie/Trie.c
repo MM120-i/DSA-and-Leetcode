@@ -8,34 +8,60 @@
 int main(void)
 {
     TrieNode *root = createNode();
+    char *words[] = {"apple", "app", "apartment", "ap", "apricot"};
+    int length = sizeof(words) / sizeof(words[0]);
 
-    insert(root, "apple");
-    insert(root, "app");
-    insert(root, "apartment");
+    for (size_t i = 0; i < length; i++)
+    {
+        insert(root, words[i]);
+    }
 
-    printf("%s\n", search(root, "apple") ? "true" : "false");
-    printf("%s\n", search(root, "apartment") ? "true" : "false");
-    printf("%s\n", search(root, "appl") ? "true" : "false");
+    printf("%s\n", printMessage(search(root, "apple")));
+    printf("%s\n", printMessage(search(root, "apartment")));
+    printf("%s\n", printMessage(search(root, "appl")));
     printf("Deleting the word 'app'\n");
 
     delete(root, "app");
 
-    printf("%s\n", search(root, "app") ? "true" : "false");
+    printf("%s\n", printMessage(search(root, "app")));
+
+    int size;
+    char **matches = match(root, "ap", &size);
+
+    printf("Words matching 'ap': \n");
+
+    for (size_t i = 0; i < size; i++)
+    {
+        printf(" - %s\n", matches[i]);
+        free(matches[i]);
+    }
+
+    free(matches);
 
     return 0;
+}
+
+static char *printMessage(bool flag)
+{
+    if (flag)
+    {
+        return "true";
+    }
+
+    return "false";
 }
 
 /**
  * Creating a new Trie Node
  */
-TrieNode *createNode()
+TrieNode *createNode(void)
 {
     TrieNode *node = (TrieNode *)malloc(sizeof(TrieNode));
     node->isEndOfWord = false;
 
     if (!node)
     {
-        printf("Memory allocation failed while creating a node :(");
+        perror("Memory allocation failed while creating a node :(");
         exit(EXIT_FAILURE);
     }
 
@@ -138,9 +164,9 @@ bool deleteHelper(TrieNode *node, const char *word, int depth)
                 {
                     return false;
                 }
-
-                return true;
             }
+
+            return true;
         }
     }
 
@@ -150,4 +176,95 @@ bool deleteHelper(TrieNode *node, const char *word, int depth)
 void delete(TrieNode *root, const char *word)
 {
     deleteHelper(root, word, 0);
+}
+
+static void DFS(TrieNode *node, char *prefix, int length, char **results, int *count)
+{
+    if (node->isEndOfWord)
+    {
+        prefix[length] = '\0';
+        results[*count] = strdup(prefix);
+        (*count)++;
+    }
+
+    for (size_t i = 0; i < ALPHABET_SIZE; i++)
+    {
+        if (node->children[i])
+        {
+            prefix[length] = 'a' + i;
+            DFS(node->children[i], prefix, length + 1, results, count);
+        }
+    }
+}
+
+char **match(TrieNode *root, const char *prefix, int *returnSize)
+{
+    TrieNode *node = root;
+    int length = 0;
+
+    // Traverse the trie to find the prefix node
+    for (size_t i = 0; prefix[i] != '\0'; i++)
+    {
+        int index = prefix[i] - 'a';
+
+        if (!node->children[index])
+        {
+            *returnSize = 0;
+            return NULL; // Prefix not found
+        }
+
+        node = node->children[index];
+        length++;
+    }
+
+    char **results = (char **)malloc(1000 * sizeof(char *));
+    char *currentPrefix = (char *)malloc(100 * sizeof(char));
+
+    if (results == NULL || currentPrefix == NULL)
+    {
+        perror("Memory allocation failed while matching.");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(currentPrefix, prefix);
+
+    *returnSize = 0;
+    DFS(node, currentPrefix, strlen(prefix), results, returnSize);
+
+    free(currentPrefix);
+    return results;
+}
+
+void freeTrie(TrieNode *root)
+{
+    if (!root)
+    {
+        return;
+    }
+
+    for (size_t i = 0; i < ALPHABET_SIZE; i++)
+    {
+        if (root->children[i])
+        {
+            freeTrie(root->children[i]);
+        }
+    }
+
+    free(root);
+}
+
+void sortResults(char **arr, int size)
+{
+    for (size_t i = 0; i < size - 1; i++)
+    {
+        for (size_t j = i + 1; j < size; j++)
+        {
+            if (strcmp(arr[i], arr[j]) > 0)
+            {
+                char *temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
 }
