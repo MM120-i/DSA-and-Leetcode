@@ -18,7 +18,6 @@ void *stackPop(stack_t *);
 void stackFree(stack_t *);
 void *stackPeek(stack_t *);
 bool stackIsEmpty(stack_t *);
-bool stackIsFull(stack_t *);
 size_t stackSize(stack_t *);
 size_t stackCapacity(stack_t *);
 void stackClear(stack_t *);
