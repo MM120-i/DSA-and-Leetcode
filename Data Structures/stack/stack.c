@@ -226,14 +226,6 @@ bool stackIsEmpty(stack_t *s)
 }
 
 /**
- * Checks if the stack is full or not
- */
-bool stackIsFull(stack_t *s)
-{
-    return (s && s->count == s->capacity);
-}
-
-/**
  * returns the stack size
  */
 size_t stackSize(stack_t *s)
