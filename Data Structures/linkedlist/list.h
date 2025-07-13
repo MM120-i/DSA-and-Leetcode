@@ -1,0 +1,23 @@
+#pragma once
+
+#include <stdbool.h>
+
+struct ListNode
+{
+    int value;
+    struct ListNode *next;
+};
+
+int findLength(struct ListNode *);
+struct ListNode *deleteNode(struct ListNode *, int);
+struct ListNode *fastandSlow(struct ListNode *);
+struct ListNode *reverse(struct ListNode *);
+struct ListNode *merge(struct ListNode *, struct ListNode *);
+struct ListNode *delete(struct ListNode *, int);
+bool hasCycle(struct ListNode *);
+struct ListNode *insertEnd(struct ListNode *, int);
+struct ListNode *insert(struct ListNode *, int, int);
+bool search(struct ListNode *, int);
+int length(struct ListNode *);
+void printList(struct ListNode *);
+void removeDuplicates(struct ListNode *);
