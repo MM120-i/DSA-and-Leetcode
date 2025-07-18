@@ -11,7 +11,6 @@
  */
 bool isPalindrome(ListNode *head)
 {
-
     // Find the middle of the linked list using fast & slow pointers
     ListNode *slow = head;
     ListNode *fast = head;
