@@ -2,11 +2,11 @@
 
 #include <stdbool.h>
 
-struct ListNode
+typedef struct ListNode
 {
     int value;
     struct ListNode *next;
-};
+} ListNode;
 
 typedef struct DListNode
 {
@@ -16,19 +16,20 @@ typedef struct DListNode
 } DListNode;
 
 // Singly Linked List
-int findLength(struct ListNode *);
-struct ListNode *deleteNode(struct ListNode *, int);
-struct ListNode *fastandSlow(struct ListNode *);
-struct ListNode *reverse(struct ListNode *);
-struct ListNode *merge(struct ListNode *, struct ListNode *);
-struct ListNode *delete(struct ListNode *, int);
-bool hasCycle(struct ListNode *);
-struct ListNode *insertEnd(struct ListNode *, int);
-struct ListNode *insert(struct ListNode *, int, int);
-bool search(struct ListNode *, int);
-int length(struct ListNode *);
-void printList(struct ListNode *);
-void removeDuplicates(struct ListNode *);
+int findLength(ListNode *);
+ListNode *deleteNode(ListNode *, int);
+ListNode *fastandSlow(ListNode *);
+ListNode *reverse(ListNode *);
+ListNode *merge(ListNode *, ListNode *);
+ListNode *delete(ListNode *, int);
+bool hasCycle(ListNode *);
+ListNode *insertEnd(ListNode *, int);
+ListNode *insert(ListNode *, int, int);
+bool search(ListNode *, int);
+int length(ListNode *);
+void printList(ListNode *);
+void removeDuplicates(ListNode *);
+ListNode *create(int);
 
 // Doubly Linked List
 DListNode *createNode(int);
