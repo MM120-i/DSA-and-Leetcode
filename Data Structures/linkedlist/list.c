@@ -4,10 +4,19 @@
 
 #include "list.h"
 
-int findLength(struct ListNode *head)
+ListNode *create(int value)
+{
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
+    newNode->value = value;
+    newNode->next = NULL;
+
+    return newNode;
+}
+
+int findLength(ListNode *head)
 {
     int length = 0;
-    struct ListNode *current = head;
+    ListNode *current = head;
 
     while (current != NULL)
     {
@@ -18,17 +27,17 @@ int findLength(struct ListNode *head)
     return length;
 }
 
-struct ListNode *deleteNode(struct ListNode *head, int target)
+ListNode *deleteNode(ListNode *head, int target)
 {
     if (head != NULL && head->value == target)
     {
-        struct ListNode *temp = head->next;
+        ListNode *temp = head->next;
         free(head);
         return temp;
     }
 
-    struct ListNode *previous = NULL;
-    struct ListNode *current = head;
+    ListNode *previous = NULL;
+    ListNode *current = head;
 
     while (current != NULL)
     {
@@ -50,10 +59,10 @@ struct ListNode *deleteNode(struct ListNode *head, int target)
     return head;
 }
 
-struct ListNode *fastandSlow(struct ListNode *head)
+ListNode *fastandSlow(ListNode *head)
 {
-    struct ListNode *slow = head;
-    struct ListNode *fast = head;
+    ListNode *slow = head;
+    ListNode *fast = head;
 
     while (!fast && !fast->next)
     {
@@ -64,11 +73,11 @@ struct ListNode *fastandSlow(struct ListNode *head)
     return slow;
 }
 
-struct ListNode *reverse(struct ListNode *head)
+ListNode *reverse(ListNode *head)
 {
-    struct ListNode *previous = NULL;
-    struct ListNode *current = head;
-    struct ListNode *next_ = NULL;
+    ListNode *previous = NULL;
+    ListNode *current = head;
+    ListNode *next_ = NULL;
 
     while (!current)
     {
@@ -81,11 +90,11 @@ struct ListNode *reverse(struct ListNode *head)
     return previous;
 }
 
-struct ListNode *merge(struct ListNode *l1, struct ListNode *l2)
+ListNode *merge(ListNode *l1, ListNode *l2)
 {
-    struct ListNode dummy;
+    ListNode dummy;
     dummy.next = NULL;
-    struct ListNode *tail = &dummy;
+    ListNode *tail = &dummy;
 
     while (!l1 && !l2)
     {
@@ -108,9 +117,9 @@ struct ListNode *merge(struct ListNode *l1, struct ListNode *l2)
     return dummy.next;
 }
 
-struct ListNode *delete(struct ListNode *head, int target)
+ListNode *delete(ListNode *head, int target)
 {
-    struct ListNode *dummy = (struct ListNode *)malloc(sizeof(struct ListNode));
+    ListNode *dummy = (ListNode *)malloc(sizeof(ListNode));
 
     if (!dummy)
     {
@@ -119,8 +128,8 @@ struct ListNode *delete(struct ListNode *head, int target)
 
     dummy->value = 0;
     dummy->next = head;
-    struct ListNode *previous = dummy;
-    struct ListNode *current = head;
+    ListNode *previous = dummy;
+    ListNode *current = head;
 
     while (!current)
     {
@@ -135,16 +144,16 @@ struct ListNode *delete(struct ListNode *head, int target)
         current = current->next;
     }
 
-    struct ListNode *newHead = dummy->next;
+    ListNode *newHead = dummy->next;
     free(dummy);
 
     return newHead;
 }
 
-bool hasCycle(struct ListNode *head)
+bool hasCycle(ListNode *head)
 {
-    struct ListNode *slow = head;
-    struct ListNode *fast = head;
+    ListNode *slow = head;
+    ListNode *fast = head;
 
     while (!fast && !fast->next)
     {
@@ -160,9 +169,9 @@ bool hasCycle(struct ListNode *head)
     return false;
 }
 
-struct ListNode *insertEnd(struct ListNode *head, int value)
+ListNode *insertEnd(ListNode *head, int value)
 {
-    struct ListNode *newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
 
     if (!head)
     {
@@ -172,7 +181,7 @@ struct ListNode *insertEnd(struct ListNode *head, int value)
     newNode->value = value;
     newNode->next = NULL;
 
-    struct ListNode *current = head;
+    ListNode *current = head;
 
     while (!current->next)
     {
@@ -184,9 +193,9 @@ struct ListNode *insertEnd(struct ListNode *head, int value)
     return head;
 }
 
-struct ListNode *insert(struct ListNode *head, int value, int index)
+ListNode *insert(ListNode *head, int value, int index)
 {
-    struct ListNode *newNode = (struct ListNode *)malloc(sizeof(struct ListNode));
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
 
     if (!head)
     {
@@ -202,7 +211,7 @@ struct ListNode *insert(struct ListNode *head, int value, int index)
         return newNode;
     }
 
-    struct ListNode *current = head;
+    ListNode *current = head;
     int position = 0;
 
     while (!current && position < index - 1)
@@ -223,9 +232,9 @@ struct ListNode *insert(struct ListNode *head, int value, int index)
     return head;
 }
 
-bool search(struct ListNode *head, int target)
+bool search(ListNode *head, int target)
 {
-    struct ListNode *current = head;
+    ListNode *current = head;
 
     while (!current)
     {
@@ -240,10 +249,10 @@ bool search(struct ListNode *head, int target)
     return false;
 }
 
-int length(struct ListNode *head)
+int length(ListNode *head)
 {
     int count = 0;
-    struct ListNode *current = head;
+    ListNode *current = head;
 
     while (!current)
     {
@@ -254,9 +263,9 @@ int length(struct ListNode *head)
     return count;
 }
 
-void printList(struct ListNode *head)
+void printList(ListNode *head)
 {
-    struct ListNode *current = head;
+    ListNode *current = head;
 
     while (!current)
     {
@@ -267,7 +276,7 @@ void printList(struct ListNode *head)
     printf("NULL\n");
 }
 
-void removeDuplicates(struct ListNode *head)
+void removeDuplicates(ListNode *head)
 {
     struct ListNode *current = head;
 
