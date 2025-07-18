@@ -8,6 +8,14 @@ struct ListNode
     struct ListNode *next;
 };
 
+typedef struct DListNode
+{
+    int value;
+    struct DListNode *previous;
+    struct DListNode *next;
+} DListNode;
+
+// Singly Linked List
 int findLength(struct ListNode *);
 struct ListNode *deleteNode(struct ListNode *, int);
 struct ListNode *fastandSlow(struct ListNode *);
@@ -21,3 +29,13 @@ bool search(struct ListNode *, int);
 int length(struct ListNode *);
 void printList(struct ListNode *);
 void removeDuplicates(struct ListNode *);
+
+// Doubly Linked List
+DListNode *createNode(int);
+DListNode *insertAtHead(DListNode *, int);
+DListNode *insertAtTail(DListNode *, int);
+DListNode *deleteByValue(DListNode *, int);
+bool searchDList(DListNode *, int);
+void printListForward(DListNode *);
+void printListBackward(DListNode *);
+void freeList(DListNode *);
