@@ -121,6 +121,31 @@ public class exercise {
 		return result;
 	}
 	
+	public static Integer[] topKFrequent(int[] nums, final int k) {
+		
+		Map<Integer, Integer> frequencyMap = new HashMap<Integer, Integer>();
+		
+		for (int num : nums) {
+			frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+		}
+		
+		// max heap
+		PriorityQueue<int[]> maxHeap = new PriorityQueue<int[]>((a, b) -> Integer.compare(b[1], a[1]));
+		
+		for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+			maxHeap.offer(new int[] {entry.getKey(), entry.getValue()});
+		}
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		for (int i = 0; i < k; i++) {
+			result.add(maxHeap.poll()[0]);
+		}
+		
+	    return result.toArray(new Integer[0]);
+	}
+	
+	
 	/**
 	 * Kth Largest Element in an Array from leetcode
 	 * 
