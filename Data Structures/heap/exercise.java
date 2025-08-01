@@ -5,16 +5,62 @@ import java.util.*;
 public class exercise {
 	
 	/**
+	 * Merge K Sorted Lists from leetcode
+	 * 
+	 * Given k linked lists, each sorted in ascending order, in a list lists, 
+	 * write a function to merge the input lists into one sorted linked list.
+	 */
+	public static List<Integer> mergeKLists(List<List<Integer>> lists) {
+		
+		if (lists == null || lists.isEmpty()) {
+			return new ArrayList<>();
+		}
+		
+		// Check if all lists r empty
+		boolean hasNonEmpty = lists.stream().anyMatch(lst -> lst != null && !lst.isEmpty());
+		
+		if (!hasNonEmpty) {
+			return new ArrayList<>();
+		}
+		
+		// create a min heap based on element value
+		PriorityQueue<int[]> heap = new PriorityQueue<int[]>((a, b) -> Integer.compare(a[0], b[0]));
+		
+		for (int i = 0; i < lists.size(); i++) {
+			
+			if (lists.get(i) != null && !lists.get(i).isEmpty()) {
+				// passing in new int[] {value, listIndex, elementIndex}
+				heap.offer(new int[] { lists.get(i).get(0), i, 0 });
+			}
+		}
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		// build the merged list
+		while (!heap.isEmpty()) {
+			
+			int[] current = heap.poll();
+			int value = current[0], listIndex = current[1], elementIndex = current[2];
+			result.add(value);	// add the smallest value to result
+			
+			// if more elements remain in that list then push the next element
+			if (elementIndex + 1 < lists.get(listIndex).size()) {
+				int nextValue = lists.get(listIndex).get(elementIndex + 1);
+				heap.offer(new int[] { nextValue, listIndex, elementIndex + 1});
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	/**
 	 * Find K Closest Elements from leetcode
 	 * 
 	 * Given a sorted array nums, a target value target, and an integer k, 
 	 * find the k closest elements to target in the array, 
 	 * where "closest" is the absolute difference between each element and target. 
 	 * Return these elements in array, sorted in ascending order.
-	 * @param nums
-	 * @param k
-	 * @param target
-	 * @return
 	 */
 	public static List<Integer> kClosest(int[] nums, final int k, final int target) {
 		
